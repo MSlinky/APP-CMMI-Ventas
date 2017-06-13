@@ -35,7 +35,17 @@ public class V02Inicio implements Initializable {
     static ObservableList<Producto> data;
     
     public boolean cargarCarro(Producto add){
-        Producto p1 = new Producto(add.id, add.producto, new Spinner<Integer>(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, add.getInventario(), 1)), String.valueOf(add.getInventario()), add.precio, new Button("Eliminar"));
+        int id = Integer.parseInt(add.getId());
+        
+        for (int i = 0; i < data.size(); i++) {
+            if(data.get(i).producto == add.producto){
+                int newCant = (Integer)data.get(i).getCantidad().getValue() +  (Integer)add.getCantidad().getValue();
+                data.get(i).getCantidad().getValueFactory().setValue(newCant);
+                return true;
+            }
+        }
+        
+        Producto p1 = new Producto(add.id, add.producto, new Spinner<Integer>(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, add.getInventario(), (Integer) add.getCantidad().getValue())), String.valueOf(add.getInventario()), add.precio, new Button("Eliminar"));
         data.add(p1);
         return true; 
     }
@@ -89,7 +99,5 @@ public class V02Inicio implements Initializable {
         
         data = FXCollections.observableArrayList();
         table.setItems(data);
-        
-        
     }    
 }
