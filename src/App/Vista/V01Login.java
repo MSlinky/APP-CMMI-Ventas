@@ -7,13 +7,16 @@ import App.Controlador.PeticionPost;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
@@ -29,6 +32,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 public class V01Login implements Initializable {
     
     @FXML
@@ -38,8 +42,12 @@ public class V01Login implements Initializable {
     
     @FXML
     private boolean IniciarSesion(ActionEvent event) throws MalformedURLException, UnsupportedEncodingException, IOException, ParseException {
-  
-        Validar objValidar = new Validar();
+        /*Socket cli =  new Socket("127.0.0.1", 9090);
+        DataOutputStream flujo = new DataOutputStream(cli.getOutputStream());
+        flujo.writeUTF("hola mundo");
+        cli.close();*/
+        
+        /*Validar objValidar = new Validar();
         //Validar datos para iniciar sesion
         if(!objValidar.checkEmail(txt_usuario.getText())){
             cross_correo.setVisible(true);
@@ -54,7 +62,7 @@ public class V01Login implements Initializable {
         cross_pass.setVisible(false);
         
         //Realizar peticion al servidor, validar datos en la base de datos.
-        PeticionPost post = new PeticionPost ("https://cmmi-ventas.herokuapp.com/");
+        PeticionPost post = new PeticionPost ();
         post.add("accion", "login");
         post.add("user", txt_usuario.getText());
         post.add("password", txt_pass.getText());
@@ -67,8 +75,8 @@ public class V01Login implements Initializable {
         JSONArray user = (JSONArray) jsonObject.get("login");
         Iterator<JSONObject> iterator = user.iterator();
         
-        //SEgunda ventana
-        if(user.size() == 1){
+        //Segunda ventana
+        if(user.size() == 1){*/
             System.out.println("Iniciar");
             Parent inicio = FXMLLoader.load(getClass().getResource("02Inicio.fxml"));
             Scene inicio_scene =  new Scene(inicio);
@@ -78,9 +86,16 @@ public class V01Login implements Initializable {
             app_stage.setX(10);
             app_stage.setY(10);
             app_stage.show();
-        }else{
+            
+            app_stage.setOnCloseRequest(new EventHandler<WindowEvent>(){
+                @Override 
+                public void handle(WindowEvent event) {
+                    System.exit(0);
+                }
+            });
+        /*}else{
             System.out.println("No iniciar");
-        }
+        }*/
         return true;
     }
     

@@ -32,7 +32,13 @@ public class Validar {
     }
     
     public Boolean checkCant(String password){
-        Pattern p = Pattern.compile("^[0-9]+(\\.[0-9]{0,5})?$");
+        Pattern p = Pattern.compile("^[0-9]+([.][0-9]{0,2})?$");
+        Matcher m = p.matcher(password);
+        return m.matches();
+    }
+    
+    public Boolean checkNum(String password){
+        Pattern p = Pattern.compile("^[0-9]+$");
         Matcher m = p.matcher(password);
         return m.matches();
     }

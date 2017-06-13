@@ -15,8 +15,8 @@ public class PeticionPost {
     private URL url;
     String data;
 
-    public PeticionPost (String url) throws MalformedURLException{
-        this.url = new URL(url);
+    public PeticionPost () throws MalformedURLException{
+        this.url = new URL("http://localhost:8080/");
         data="";
     }
 
